@@ -1,0 +1,34 @@
+configserver:
+  image: dhaval/configserver
+  ports:
+   - "8888:8888"
+  links:
+   - eureka
+eureka:
+  image: dhaval/eureka-service
+  ports:
+   - "8761:8761"
+hystrix:
+  image: dhaval/hystrix-dashboard
+  ports:
+   - “8010:8010”
+  links:
+   - gateway
+   - eureka
+gateway:
+  image: dhaval/reservation-client
+  ports:
+   - “8050:8050"
+  links:
+   - eureka
+   - configserver
+   - reservationservice
+reservationservice:
+  image: dhaval/reservation-service
+  ports:
+   - “8000:8000
+   - “8001:8001
+   - “8002:8002
+  links:
+   - eureka
+   - configserver
